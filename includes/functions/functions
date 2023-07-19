@@ -1,0 +1,61 @@
+<?php
+
+/*
+===============================================
+================= save Operation ==============
+===============================================
+*/
+
+
+/*
+===============================================
+================= add student ================
+===============================================
+*/
+function add_student($name,$email,$phone,$dep,$gpa){
+    global $con;
+    $stmt = $con->prepare("INSERT INTO students(name,email,phone,dep,gpa) value(?,?,?,?,?)");
+    $stmt->execute(array($name,$email,$phone,$dep,$gpa));
+
+    //save_operation('students','ADD');
+
+   
+}
+
+
+
+
+/*
+===============================================
+================= get students ================
+===============================================
+*/
+function get_all_data($table){
+    global $con;
+    $stmt = $con->prepare("SELECT * FROM $table");
+    $stmt->execute();
+    $students = $stmt->fetchAll();
+    return $students;
+}
+
+
+
+
+
+/*
+===============================================
+============= delete student with id ========
+===============================================
+*/
+function delete_with_id($table,$id){
+    global $con;
+    $stmt = $con->prepare("DELETE FROM $table WHERE id=?");
+    $stmt->execute(array($id));
+
+    save_operation($table,'Delete');
+
+   
+}
+
+
+
