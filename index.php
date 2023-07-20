@@ -3,11 +3,10 @@ $page_title = 'All student';
 $css_file = 'style.css';
 require_once('./init.php');
 
- global $con;
-$stmt = $con -> parpare('SELECT * FORM $table ');
-$stmt -> excute();
-$students = $stmt -> fetchAll();
-
+global $con;
+$stmt = $con->prepare('SELECT * FROM students');
+$stmt->execute();
+$students = $stmt->fetchAll();
 ?>
 
 
@@ -17,7 +16,6 @@ $students = $stmt -> fetchAll();
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
-      <th scope="col">email</th>
       <th scope="col">faculty</th>
       <th scope="col">Department</th>
       <th scope="col">gpa</th>
@@ -26,15 +24,21 @@ $students = $stmt -> fetchAll();
   </thead>
   <tbody>
 
-  <?php foreach($students as $student){ ?>
+  <?php if (!empty($students)) {
+  // Iterate over the students' data
+  foreach ($students as $student) {
+    // Display student information in table rows
+    // ...
+  }
+}
+  foreach($students as $student){ ?>
     <tr>
       <td><?php echo $student['id']?></td>
       <td><?php echo $student['name']?></td>
-      <td><?php echo $student['email']?></td>
-      <td><?php //echo $student['phone']?></td>
+      <td><?php echo $student['faculty']?></td>
       <td><?php echo $student['dep']?></td>
       <td><?php echo $student['gpa']?></td>
-      <td><a class="btn btn-danger" href="delete.php?emp_id=<?php echo $student['id']?>">Delete</a></td>
+      <td><a class="btn btn-danger" href="delete.php?student_id=<?php echo $student['id']?>">Delete</a></td>
     </tr>
     <?php } ?>
 
